@@ -1,0 +1,114 @@
+KERNEL PORTING
+
+With the evolution of embedded systems, porting has become extremely important. 
+Whenver we come accors to new hardware , the first thing we do is porting. Porting 
+become easier for ous because linux kernel is open source. 
+So, lets understand what porting is all about.
+
+Q-  What is kernel porting?
+Ans- Porting means- making linux work on harware, for which it is not designed for
+This means that there is already some code available and it only needs to be fine-tuned 
+to the desired target. There may be a need to change a few lines here and there, before
+it is up and running. But, the key thing to know is, what needs to be changed and where.
+
+
+Q- What linux kernel porting involves?
+Ans- Linux kernel porting involves two things at a higher level: architecture porting and board porting.
+Architecture, in Linux terminology, refers to CPU. So, architecture porting means adapting the Linux 
+kernel to the target CPU,which may be ARM, Power PC, MIPS, and so on. In addition to this, SOC porting 
+can also be considered as part of architecture porting.However, you still need to port Linux for the board 
+and this is where the major focus lies. Architecture porting entails porting of initial start-up code, 
+interrupt service routines, dispatcher routine, timer routine, memory management, and so on. Whereas board
+porting involves writing custom drivers and initialisation code for devices specific to the board.
+
+
+POINTS:-
+
+About Our Task Concerned:- 
+
+1- Here we are focus on Architecture porting.
+2- We have already given with a device which has some old kernel.
+3- We need to make that old kernel to new one. Basically we need to upgrade the existing kernel of device.
+
+
+Now let us see how to do this:- 
+
+Refer-  https://source.android.com/setup
+	Learn Git concepts and git commands.
+ 
+1- As googles devices have open source code, which we can get it from https://source.android.com/setup/build/building-kernels
+   or it will be availabe in Git (an open-source version control system) for particular devices.
+2- This source code will have exsisting kernel, drivers and BSP part. 
+3- As we are upgrading only kernel, so we need to focus on only how to upgrade kernel.
+
+Here we came across term "PATCH". Patch means differnce between upgrade version of kernel.
+Let us try to understand the patch with example-
+
+Suppose exisiting kernel is 4.9.124 and we need to upgrade it to 4.9.125
+Setps:-
+1- Download both kernel sources from Kernel.org. 
+
+2- Take difference by using diff command 
+
+    $ diff -u 4.9.124 4.9.125 > file_patch
+this command will give difference of both kernel in file_patch file.
+
+3- Now this file_patch file is actual patch for 4.9.124 kenrel. By applying this patch to 4.9.124 kernel we can easily upgrade this kernel to 4.9.125.
+			$ patch -p1 4.9.124 < file_patch
+ 
+Firstly Understand the content of patch file and apply it by patch command or we can apply it manually line by line.
+[ TRICK- First apply by patch command and you will see in some places it fails so where it fails apply it manually.
+	Cross check the fails places ]
+
+4- After applying the patch we need to compile that patched kernel.
+The big task is how to compile the kernel-
+
+	I- For google devices tools are given and all information is given in this site- https://source.android.com/setup/build/building-kernels
+	   Here we get all building tools for kernel and everything is scripted and just we need to run script file (build/build.sh)
+	   After compilation we will get image of compiled kernel.
+
+	II- For mannual compilation of kernel we have differnt steps- 
+	   - Download the kernel source code and its toolchain(compiler)
+	   - Export ARCH varibale i.e export it to specific architecture
+			$ export ARCH=arm		
+  	   - Export CROSS_COMPILER(compiler) 
+			$ export CROSS_COMPILER=Compiler_name
+	   - Export Kernel Build System(i.e compiler kernel) to PATH varibale
+			$ export PATH=$PATH:/KERNEL_BUILD_SYSTEM
+
+5- After compilation of kernel we will get image file (Image.lz4-dtb) 
+
+6- AOSP(Android Open Source Project)
+
+	We should also know about AOSP . 
+     - Android is a free open-source operating system. The AOSP (Android Open Source Project) is free to download, free to alter,
+       free to build into  a product that can power just about anything.
+	Refer- https://source.android.com/
+
+    - Download AOSP according to version required for particular device.
+	Build the AOSP by specific command -
+	1- $ build/envsetup.sh
+	2- $ lunch - here select the particular board
+	3- $ make  
+
+    - Copy the Image.lz4-dtb to the respective kernel binary location within the AOSP tree and rebuild the boot image by make bootimage command.
+	(or)	alternatively, you can define the TARGET_PREBUILT_KERNEL variable while using make bootimage 
+		export TARGET_PREBUILT_KERNEL=DIST_DIR/Image.lz4-dtb
+ 
+	Refer- https://source.android.com/setup/build/building-kernels 
+
+7- After this we can flash the AOSP into device.
+ 	Refer this link it will be good.
+  Refer- https://source.android.com/setup/build/running
+
+
+
+
+
+
+
+			
+
+
+ 
+

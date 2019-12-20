@@ -1,0 +1,29 @@
+UEFI  - unified extensible fiemware interface
+
+1- UEFI is a more modern solution, supporting larger hard drives, faster boot times, more security features, and—conveniently—graphics and mouse cursors.
+2- You can configure various settings in the BIOS setup screen. Settings like your computer’s hardware configuration, system time, and BOOT ORDER are located here.
+3- You can access this screen by pressing a specific key—different on different computers, but often Esc, F2, F10, or Delete—while the computer boots. When you save a setting, it’s saved to the memory on your motherboard itself. When you boot your computer, the BIOS will configure your PC with the saved settings.
+4- BIOS checks to ensure your hardware configuration is valid and working properly.  If something is wrong, you’ll see an error message or hear a cryptic series of beep codes. You’ll have to look up what different sequences of beeps mean in the computer’s manual.
+5-  CMOS, which stands for Complementary Metal-Oxide-Semiconductor. This refers to the battery-backed memory where the BIOS stores various settings on the motherboard. It’s actually not accurate anymore, since this method has been replaced with flash memory (also referred to as EEPROM) in contemporary systems.
+
+6- 
+
+
+
+
+
+
+How UEFI Replaces and Improves on the BIOS?
+
+1- The UEFI firmware can boot from drives of 2.2 TB or larger—in fact, the theoretical limit is 9.4 zettabytes.  That’s because UEFI uses the GPT partitioning scheme instead of MBR. It also boots in a more standardized way, launching EFI executables rather than running code from a drive’s master boot record.
+
+
+
+
+
+
+
+BOOT ORDER
+
+1- changing the boot order in the BIOS or UEFI firmware (so it attempts to boot from CD or USB every time), or by accessing a boot menu on startup (so it’ll only boot from CD or USB that one time).  
+
